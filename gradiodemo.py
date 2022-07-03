@@ -74,6 +74,8 @@ def inference(input_im):
 def clear(image):
     return
 
+def setsample(image):
+    return image
 
 
 with gr.Blocks() as demo:
@@ -93,17 +95,27 @@ with gr.Blocks() as demo:
         clr.click(fn=clear, inputs=inp, outputs=inp) # clear input gr.Image
         clr.click(fn=clear, inputs=out, outputs=out) # clear output gr.Image
 
-    """      
+          
     gr.Markdown("<h3>Sample Inputs</h3>")
    
     with gr.Row():
-            gr.Image(value="sample_images/1.JPG", tools="select")
-            gr.Image(value="sample_images/1.JPG")
-            gr.Image(value="sample_images/1.JPG")
-            gr.Image(value="sample_images/1.JPG")
-            gr.Image(value="sample_images/1.JPG")
-    """
-        
+            with gr.Column():
+                sample1 = gr.Image(value="sample_images/1.JPG")
+            with gr.Column():
+                samplebtn1 = gr.Button(value="Try sample 1")
+                samplebtn1.click(fn=setsample, inputs=sample1, outputs=inp)
+
+            with gr.Column():
+                sample2 = gr.Image(value="sample_images/2.JPG")
+            with gr.Column():
+                samplebtn2 = gr.Button(value="Try sample 2")
+                samplebtn2.click(fn=setsample, inputs=sample2, outputs=inp)    
+
+            with gr.Column():
+                sample3 = gr.Image(value="sample_images/3.JPG")
+            with gr.Column():
+                samplebtn3 = gr.Button(value="Try sample 3")
+                samplebtn3.click(fn=setsample, inputs=sample3, outputs=inp)    
         
     #add info here
     gr.Markdown("""
@@ -116,6 +128,8 @@ with gr.Blocks() as demo:
 
                 The current implementation was trained on the selfie2anime dataset and transforms real human faces into anime faces. Due to limitations of the dataset, GNR works best
                 when working with <b>female face inputs</b> that are <b>cropped to include only the face</b> (no neck and body).
+
+                GNR was implemented by Chong, M. & Forsyth, D. (2021) in the paper GANs N' Roses: Stable, Controllable, Diverse Image to Image Translation (works for videos too!)
                 """)
 
     
