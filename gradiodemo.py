@@ -71,7 +71,7 @@ def inference(input_im):
         tensor_to_pil = transforms.ToPILImage(mode='RGB')(z.squeeze())
     return tensor_to_pil
 
-def clear(buff):
+def clear(image):
     return
 
 
@@ -80,7 +80,7 @@ with gr.Blocks() as demo:
     gr.Markdown("<h1>GANs N' Roses</h1>")
     gr.Markdown("""Convert real-life face images into diverse anime versions of themselves. Use the default sample image or replace the input
                 by first clicking X then dragging a new image into the Input box. Crop the image by cliking the pen tool. Click <b>Run</b> to transform the input
-                into an anime version. Click <b>Clear</b> to clear the ouput box.""")
+                into an anime version. Click <b>Clear</b> to clear the ouput box. Try running it multiple times for different anime styles!""")
     
     with gr.Row():
         with gr.Column():
@@ -90,6 +90,8 @@ with gr.Blocks() as demo:
                 run = gr.Button("Run")
         with gr.Column():
             out = gr.outputs.Image(type="pil")
+        clr.click(fn=clear, inputs=inp, outputs=inp) # clear input gr.Image
+        clr.click(fn=clear, inputs=out, outputs=out) # clear output gr.Image
 
     """      
     gr.Markdown("<h3>Sample Inputs</h3>")
@@ -117,7 +119,6 @@ with gr.Blocks() as demo:
                 """)
 
     
-    clr.click(fn=clear, inputs = inp, outputs=[out])
     run.click(fn=inference, inputs=inp, outputs=out)
   
 demo.launch(share = True)
