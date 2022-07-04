@@ -154,6 +154,7 @@ gr.Interface(
     title=title,
     description=description,
     article=article,
+    allow_flagging='never',
     examples = 
     [["sample_images/2.JPG"],["sample_images/1.JPG"],["sample_images/3.JPG"]]
     ).launch(share=True)
